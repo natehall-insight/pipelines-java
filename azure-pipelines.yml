@@ -25,17 +25,20 @@ steps:
     script: |
       echo "Inputing variables"
       echo "testOne variable check"
-      if [[ -z ${{testOne}} ]]; then
+      if [[ -z $TEST_ONE ]]; then
         echo "testOne not provided."
       else
-        echo "testOne value: ${{testOne}}"
+        echo "testOne value: $TEST_ONE"
       fi
       echo "testTwo variable check"
-      if [[ -z ${{testTwo}} ]]; then
+      if [[ -z $TEST_TWO ]]; then
         echo "testTwo not provided."
       else
-        echo "testTwo value: ${{testTwo}}"
+        echo "testTwo value: $TEST_TWO"
       fi
+  env:
+    TEST_ONE: ${{testOne}}
+    TEST_TWO: ${{testTwo}}
 
 - task: Maven@3
   inputs:
