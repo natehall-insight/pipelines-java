@@ -37,8 +37,8 @@ steps:
         echo "testTwo value: $TEST_TWO"
       fi
   env:
-    TEST_ONE: ${{testOne}}
-    TEST_TWO: ${{testTwo}}
+    TEST_ONE: ${{parameters.testOne}}
+    TEST_TWO: ${{parameters.testTwo}}
 
 - task: Maven@3
   inputs:
