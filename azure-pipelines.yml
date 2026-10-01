@@ -17,22 +17,26 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: PowerShell@2
+- task: Bash@3
   inputs:
-    inlineScript: |
-      Write-Host "Inputing variables"
-      Write-Host "testOne variable check"
-      if ([string]::IsNullOrEmpty($testOne)) {
-        Write-Host "testOne not provided."
-      } else {
-        Write-Host "testOne value: $(testOne)"
-      }
-      Write-Host "testTwo variable check"
-      if ([string]::IsNullOrEmpty($testTwo)) {
-        Write-Host "testTwo not provided."
-      } else {
-        Write-Host "testTwo value: $(testTwo)"
-      }
+    targetType: inline
+    script: |
+      echo "Inputing variables"
+      echo "testOne variable check"
+      if [[ -z "$TEST_ONE" ]]; then
+        echo "testOne not provided."
+      else
+        echo "testOne value: $TEST_ONE"
+      fi
+      echo "testTwo variable check"
+      if [[ -z "$TEST_TWO" ]]; then
+        echo "testTwo not provided."
+      else
+        echo "testTwo value: $TEST_TWO"
+      fi
+  env:
+    TEST_ONE: $(testOne)
+    TEST_TWO: $(testTwo)
 
 - task: Maven@3
   inputs:
