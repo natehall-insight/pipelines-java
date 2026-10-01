@@ -3,13 +3,37 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+
 trigger:
 - main
+
+variables:
+  - name: testOne
+    value: ''
+  - name: testTwo
+    value: ''
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: PowerShell@2
+  inputs:
+    inlineScript: |
+      Write-Host "Inputing variables"
+      Write-Host "testOne variable check"
+      if ([string]::IsNullOrEmpty($testOne)) {
+        Write-Host "testOne not provided."
+      } else {
+        Write-Host "testOne value: $(testOne)"
+      }
+      Write-Host "testTwo variable check"
+      if ([string]::IsNullOrEmpty($testTwo)) {
+        Write-Host "testTwo not provided."
+      } else {
+        Write-Host "testTwo value: $(testTwo)"
+      }
+
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
