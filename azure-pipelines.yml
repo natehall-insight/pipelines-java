@@ -7,14 +7,16 @@
 trigger:
 - main
 
-variables:
-  - name: testOne
-    value: ''
-  - name: testTwo
-    value: ''
-
 pool:
   vmImage: ubuntu-latest
+
+parameters:
+  - name: testOne
+    type: string
+    default: ''
+  - name: testTwo
+    type: string
+    default: ''
 
 steps:
 - task: Bash@3
@@ -23,20 +25,17 @@ steps:
     script: |
       echo "Inputing variables"
       echo "testOne variable check"
-      if [[ -z "$TEST_ONE" ]]; then
+      if [[ -z ${{testOne}} ]]; then
         echo "testOne not provided."
       else
-        echo "testOne value: $TEST_ONE"
+        echo "testOne value: ${{testOne}}"
       fi
       echo "testTwo variable check"
-      if [[ -z "$TEST_TWO" ]]; then
+      if [[ -z ${{testTwo}} ]]; then
         echo "testTwo not provided."
       else
-        echo "testTwo value: $TEST_TWO"
+        echo "testTwo value: ${{testTwo}}"
       fi
-  env:
-    TEST_ONE: $(testOne)
-    TEST_TWO: $(testTwo)
 
 - task: Maven@3
   inputs:
